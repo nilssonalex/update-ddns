@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 source config.sh
 
-
-
-
 get_current_ip() {
 	curl --retry 5 -s https://ipinfo.io/ip
 }
@@ -15,46 +12,41 @@ get_last_ip() {
 last_IP=$(get_last_ip)
 
 update_ip() {
-	echo "Uppdaterar IP..."
+	echo "Updating IP..."
 	echo " "
 	echo "lastip.txt:"
 	cat ${scriptpath}/lastip.txt
 	echo " "
-	echo "Anropar Njalla..."
+	echo "Updating Njalla..."
 	curl --retry 5 -s "https://njal.la/update/?h=${njalladomain}&k=${njallakey}&auto&quiet"
-	echo "Njalla är uppdaterat."
+	echo "Njalla is updated."
 	echo " "
-	echo "Sparar aktuell IP-adress..."
+	echo "Saving IP address..."
 	curl --retry 5 -s https://ipinfo.io/ip -o ${scriptpath}/lastip.txt
-	echo "Aktuell IP-adress sparad"
+	echo "IP address saved to file"
 	echo " "
 	echo "lastip.txt:"
 	cat ${scriptpath}/lastip.txt
-	echo " "
-	echo "IP uppdaterad."
 	echo " "
 	curl \
-    -d "Ny IP-adress: ${current_IP}" \
-    -H "Title: Ny IP för ${hostname}" \
+    -d "New IP: ${current_IP}" \
+    -H "Title: New IP for ${hostname}" \
     -H "Priority: high" \
     https://ntfy.sh/${ntfytopic}
 }
 
 if [ "$last_IP" = "$current_IP" ]; then
 	echo " "
-	echo "Ett litet script för att uppdatera DNS!"
-	echo "Aktuell IP är	${current_IP}"
-	echo "Lagrad IP är	${last_IP}"
-	echo "IP har inte ändrats sedan sist."
-	echo "Avslutar script."
+	echo "Current IP is	${current_IP}"
+	echo "Saved IP is	${last_IP}"
+	echo "IP has not changed."
 	echo " "
 	
 else
 	echo " "
-	echo "Ett litet script för att uppdatera DNS!"
-	echo "IP har ändrat sedan sist!"
-	echo "Lagrad IP är 	${last_IP}"
-	echo "Aktuell IP är 	${current_IP}"
+	echo "Current IP is	${current_IP}"
+	echo "Saved IP is	${last_IP}"
+	echo "IP has changed."
 	echo " "
 	update_ip
 fi
