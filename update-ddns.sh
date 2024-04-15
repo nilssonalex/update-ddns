@@ -3,9 +3,11 @@ source config.sh
 
 #config file: 
 #!/usr/bin/env bash
+#hostname="hostname"
 #scriptpath="/path/to/script"
 #njalladomain="domain.to.update"
 #njallakey="njallakey"
+#ntfytopic="ntfytopic"
 
 
 get_current_ip() {
@@ -37,6 +39,11 @@ update_ip() {
 	echo " "
 	echo "IP uppdaterad."
 	echo " "
+	curl \
+    -d "Ny IP-adress: ${current_IP}" \
+    -H "Title: Ny IP för ${hostname}" \
+    -H "Priority: high" \
+    https://ntfy.sh/${ntfytopic}
 }
 
 if [ "$last_IP" = "$current_IP" ]; then
@@ -47,6 +54,7 @@ if [ "$last_IP" = "$current_IP" ]; then
 	echo "IP har inte ändrats sedan sist."
 	echo "Avslutar script."
 	echo " "
+	
 else
 	echo " "
 	echo "Ett litet script för att uppdatera DNS!"
