@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
 source config.sh
 
-#config file: 
-#!/usr/bin/env bash
-#hostname="hostname"
-#scriptpath="/path/to/script"
-#njalladomain="domain.to.update"
-#njallakey="njallakey"
-#ntfytopic="ntfytopic"
 
-#run as cronjob with path
-#PATH=/bin:/usr/bin:/path/to/script
-#* * * * * /path/to/script/update-ddns.sh > /dev/null 2>&1
 
 
 get_current_ip() {
