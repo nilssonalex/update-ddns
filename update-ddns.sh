@@ -9,6 +9,10 @@ source config.sh
 #njallakey="njallakey"
 #ntfytopic="ntfytopic"
 
+#run as cronjob with path
+#PATH=/bin:/usr/bin:/path/to/script
+#* * * * * /path/to/script/update-ddns.sh > /dev/null 2>&1
+
 
 get_current_ip() {
 	curl --retry 5 -s https://ipinfo.io/ip
